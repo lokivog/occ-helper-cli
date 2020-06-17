@@ -81,7 +81,7 @@ occ
   .command("transfer <file>")
   .alias("t")
   .description(
-    "Transfer the contents of a single file to a destination server."
+    "Transfer the contents of a single file to a destination server. [options|dev,test,stage,prod] -d <env>"
   )
   .requiredOption(
     "-d, --destinationNode <env>",
@@ -94,7 +94,7 @@ occ
   .command("transferAll <dir>")
   .alias("ta")
   .description(
-    "Transfer the contents of a directory to a destination server."
+    "Transfer the contents of a directory to a destination server. [options|dev,test,stage,prod] -d <env>"
   )
   .requiredOption(
     "-d, --destinationNode <env>",
@@ -103,4 +103,51 @@ occ
   .action( function(filePath, options) {
     dcu.transfer(filePath,options);
   })
+
+occ
+  .command("listLayouts")
+  .alias("list")
+  .description(
+    "This lists all of the page layouts available on the system."
+  )
+  .action(function() {
+    dcu.listLayouts();
+  })
+
+occ
+  .command("transferLayout <layout>")
+  .alias("tl")
+  .description(
+    "Transfers a layout from a source env to a destination env [options|dev,test,stage,prod] -f <fromEnv> -d <toEnv>"
+  )
+  .requiredOption(
+    "-f, --fromNode <env>",
+    "source node to transfer files from, options are [dev, test, stage, prod]"
+  )
+  .requiredOption(
+    "-d, --destinationNode <env>",
+    "destination node to transfer files to, options are [dev, test, stage, prod]"
+  )
+  .action( function(filePath, options) {
+    dcu.transferLayout(filePath,options);
+  })
+
+occ
+  .command("transferAllLayouts")
+  .alias("tal")
+  .description(
+    "Transfers ALL Layouts from a source env to a destination env [options|dev,test,stage,prod] -f <fromEnv> -d <toEnv>"
+  )
+  .requiredOption(
+    "-f, --fromNode <env>",
+    "source node to transfer files from, options are [dev, test, stage, prod]"
+  )
+  .requiredOption(
+    "-d, --destinationNode <env>",
+    "destination node to transfer files to, options are [dev, test, stage, prod]"
+  )
+  .action( function(filePath, options) {
+    dcu.transferAllLayouts(filePath,options);
+  })
+
 occ.parse(process.argv);
