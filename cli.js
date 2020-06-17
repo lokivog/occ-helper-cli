@@ -77,5 +77,30 @@ occ
   .command("env")
   .description("View environment credentials")
   .action(() => envCmd());
-
+occ
+  .command("transfer <file>")
+  .alias("t")
+  .description(
+    "Transfer the contents of a single file to a destination server."
+  )
+  .requiredOption(
+    "-d, --destinationNode <env>",
+    "destination node to transfer files to, options are [dev, test, stage, prod]"
+  )
+  .action( function(filePath, options) {
+    dcu.transfer(filePath,options);
+  })
+occ
+  .command("transferAll <dir>")
+  .alias("ta")
+  .description(
+    "Transfer the contents of a directory to a destination server."
+  )
+  .requiredOption(
+    "-d, --destinationNode <env>",
+    "destination node to transfer files to, options are [dev, test, stage, prod]"
+  )
+  .action( function(filePath, options) {
+    dcu.transfer(filePath,options);
+  })
 occ.parse(process.argv);

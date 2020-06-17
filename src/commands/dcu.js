@@ -2,6 +2,8 @@ const chalk = require("chalk");
 const { spawn, exec } = require("child_process");
 const { env_path, app_key } = process.env;
 const uni = require("../uniLog");
+const config = require("../config");
+const servers = config.get("servers");
 
 const grab = options => {
   let grab = options.keep ? "" : "--clean";
@@ -64,4 +66,28 @@ const refresh = directoryPath => {
   );
 };
 
-module.exports = { grab, put, putAll, refresh };
+const transfer = ( filePath, options ) => {
+
+  let file = filePath.split("/");
+  let fileName = file[file.length - 1];
+  console.log("✏️  " + chalk.green("Transfering [" + fileName + "] file... to " + options.destinationNode));
+  spawn(
+    "dcu",
+    ["-r", filePath, "--node", servers[options.destinationNode].adminUrl, "--applicationKey", servers[options.destinationNode].applicationKey],
+    { stdio: "inherit" }
+  );
+};
+
+const transferAll = ( filePath, options ) => {
+
+  let file = filePath.split("/");
+  let fileName = file[file.length - 1];
+  console.log("✏️  " + chalk.green("Transfering [" + fileName + "] file... to " + options.destinationNode));
+  spawn(
+    "dcu",
+    ["--transferAll", filePath, "--node", servers[options.destinationNode].adminUrl, "--applicationKey", servers[options.destinationNode].applicationKey],
+    { stdio: "inherit" }
+  );
+};
+
+module.exports = { grab, put, putAll, refresh, transfer, transferAll };
