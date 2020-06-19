@@ -101,7 +101,7 @@ occ
     "destination node to transfer files to, options are [dev, test, stage, prod]"
   )
   .action( function(filePath, options) {
-    dcu.transfer(filePath,options);
+    dcu.transferAll(filePath,options);
   })
 
 occ

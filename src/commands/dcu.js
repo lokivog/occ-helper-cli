@@ -109,7 +109,7 @@ const transferLayout = ( filePath, options ) => {
   spawn(
     "plsu",
     ["--transfer", "--node", servers[options.fromNode].adminUrl, "--applicationKey", servers[options.fromNode].applicationKey, 
-    "--detinationNode", servers[options.destinationNode].adminUrl, "--destinationApplicationKey", servers[options.destinationNode].applicationKey,
+    "--destinationNode", servers[options.destinationNode].adminUrl, "--destinationApplicationKey", servers[options.destinationNode].applicationKey,
     "--name", fileName],
     { stdio: "inherit" }
   );
@@ -122,7 +122,7 @@ const transferAllLayouts = (options) => {
   spawn(
     "plsu",
     ["--transfer", "--node", servers[options.fromNode].adminUrl, "--applicationKey", servers[options.fromNode].applicationKey, 
-    "--detinationNode", servers[options.destinationNode].adminUrl, "--destinationApplicationKey", servers[options.destinationNode].applicationKey,
+    "--destinationNode", servers[options.destinationNode].adminUrl, "--destinationApplicationKey", servers[options.destinationNode].applicationKey,
     "--all"],
     { stdio: "inherit" }
   );
