@@ -14,6 +14,14 @@ function dcuCmd() {
   }
 }
 
+function plcuCmd() {
+  if(os.platform() === 'win32') {
+    return "plsu.cmd";
+  } else {
+    return "plsu";
+  }
+}
+
 const grab = options => {
   let grab = options.keep ? "" : "--clean";
   if (grab == "--clean") {
@@ -22,7 +30,7 @@ const grab = options => {
   // console.log("--grab", grab, "--node", env_path);
   console.log("📡  " + chalk.green("Locating Widgets..."));
   spawn(
-    "dcu",
+    dcuCmd(),
     ["--grab", grab, "--node", env_path, "--applicationKey", app_key],
     { stdio: "inherit" }
   );
@@ -33,7 +41,7 @@ const put = filePath => {
   let fileName = file[file.length - 1];
   console.log("✏️  " + chalk.green("Updating [" + fileName + "] file..."));
   spawn(
-    "dcu",
+    dcuCmd(),
     ["--put", filePath, "--node", env_path, "--applicationKey", app_key],
     { stdio: "inherit" }
   );
@@ -43,7 +51,7 @@ const putAll = directoryPath => {
   let widgetName = widget[widget.length - 1];
   console.log("✏️  " + chalk.green("Updating [" + widgetName + "] widget..."));
   spawn(
-    "dcu",
+    dcuCmd(),
     [
       "--putAll",
       directoryPath,
@@ -82,7 +90,7 @@ const transfer = ( filePath, options ) => {
   let fileName = file[file.length - 1];
   console.log("✏️  " + chalk.green("Transfering [" + fileName + "] file... to " + options.destinationNode));
   spawn(
-    "dcu",
+    dcuCmd(),
     ["-r", filePath, "--node", servers[options.destinationNode].adminUrl, "--applicationKey", servers[options.destinationNode].applicationKey],
     { stdio: "inherit" }
   );
@@ -94,7 +102,7 @@ const transferAll = ( filePath, options ) => {
   let fileName = file[file.length - 1];
   console.log("✏️  " + chalk.green("Transfering [" + fileName + "] file... to " + options.destinationNode));
   spawn(
-    "dcu",
+    dcuCmd(),
     ["--transferAll", filePath, "--node", servers[options.destinationNode].adminUrl, "--applicationKey", servers[options.destinationNode].applicationKey],
     { stdio: "inherit" }
   );
