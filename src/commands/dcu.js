@@ -4,6 +4,15 @@ const { env_path, app_key } = process.env;
 const uni = require("../uniLog");
 const config = require("../config");
 const servers = config.get("servers");
+var os = require('os');
+
+function dcuCmd() {
+  if(os.platform() === 'win32') {
+    return "dcu.cmd";
+  } else {
+    return "dcu";
+  }
+}
 
 const grab = options => {
   let grab = options.keep ? "" : "--clean";
@@ -48,12 +57,13 @@ const putAll = directoryPath => {
 };
 const refresh = directoryPath => {
   let widget = directoryPath.split("/");
+  dcuCmd();
   let widgetName = widget[widget.length - 1];
   console.log(
     "✏️  " + chalk.green("Refreshing [" + widgetName + "] widget...")
   );
   spawn(
-    "dcu",
+    dcuCmd(),
     [
       "--refresh",
       directoryPath,
