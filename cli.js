@@ -64,14 +64,11 @@ occ
     "[default] Deletes all local files that have been previously downloaded."
   )
   .option(
-    "-nc, --keep",
-    "Keep all local files that have been previously downloaded and add new files created."
+    "-a, --allLocales",
+    "Gets text data for all locales rather than just the current locale for the target Commerce instance."
   )
   .action((dir, options) => {
-    let opts = { clean: false, keep: false };
-    opts = options.clean ? { clean: true, keep: false } : opts;
-    opts = options.keep ? { clean: false, keep: true } : opts;
-    dcu.grab(opts);
+    dcu.grab(options);
   });
 occ
   .command("env")
@@ -89,7 +86,7 @@ occ
   )
   .action( function(filePath, options) {
     dcu.transfer(filePath,options);
-  })
+  });
 occ
   .command("transferAll <dir>")
   .alias("ta")
@@ -102,7 +99,7 @@ occ
   )
   .action( function(filePath, options) {
     dcu.transferAll(filePath,options);
-  })
+  });
 
 occ
   .command("listLayouts")
@@ -112,7 +109,7 @@ occ
   )
   .action(function() {
     dcu.listLayouts();
-  })
+  });
 
 occ
   .command("transferLayout <layout>")
@@ -130,7 +127,7 @@ occ
   )
   .action( function(filePath, options) {
     dcu.transferLayout(filePath,options);
-  })
+  });
 
 occ
   .command("transferAllLayouts")
@@ -148,6 +145,6 @@ occ
   )
   .action( function(filePath, options) {
     dcu.transferAllLayouts(filePath,options);
-  })
+  });
 
 occ.parse(process.argv);

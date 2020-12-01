@@ -23,17 +23,23 @@ function plcuCmd() {
 }
 
 const grab = options => {
-  let grab = options.keep ? "" : "--clean";
-  if (grab == "--clean") {
-    console.log(uni.info + " Clean grabb selected.");
+  let clean = options.clean ? "--clean" : "";
+  let allLocales = options.allLocales ? "--allLocales" : "";
+  if (clean == "--clean") {
+    console.log(uni.info + " Clean grab selected.");
   }
-  // console.log("--grab", grab, "--node", env_path);
+  
+  if (allLocales == "--allLocales") {
+    console.log(uni.info + " grab allLocales.");
+  }
+  //console.log("--grab", grab, "--node", allLocales);
   console.log("📡  " + chalk.green("Locating Widgets..."));
+  
   spawn(
     dcuCmd(),
-    ["--grab", grab, "--node", env_path, "--applicationKey", app_key],
+    ["--grab", "--node", env_path, "--applicationKey", app_key, clean, allLocales],
     { stdio: "inherit" }
-  );
+  ); 
 };
 
 const put = filePath => {
